@@ -1,0 +1,32 @@
+.tabs-component {
+    padding: 16px;
+    font-family: sans-serif;
+}
+
+.tabs-wrapper {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    gap: 4px;
+    border-bottom: 1px solid #ccc;
+}
+
+.pinned-block {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    border-top: 1px solid #ccc;
+    padding-top: 4px;
+}
+
+
+.tab {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.tab.active-tab {
+    background-color: #a2d2ff;
+    border-color: #339af0;
+}

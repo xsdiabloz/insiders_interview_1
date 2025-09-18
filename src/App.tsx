@@ -1,8 +1,12 @@
-import { useState } from "react";
 import "./App.css";
+import Tabs from "./tabs/Tabs";
 
 function App() {
-  return <>app</>;
+  return (
+    <>
+      <Tabs />
+    </>
+  );
 }
 
 export default App;
