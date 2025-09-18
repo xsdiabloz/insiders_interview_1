@@ -1,7 +1,8 @@
 import React from "react";
 import PushPinIcon from "@mui/icons-material/PushPin";
 import CloseIcon from "@mui/icons-material/Close";
-import { type TTabs } from "../tabsArray/tabsArray";
+import { type TTabs } from "../../tabsArray/tabsArray";
+import styles from "./SortableTab.module.css";
 
 type Props = {
   tab: TTabs;
@@ -21,24 +22,14 @@ export default function SortableTab({
 }: Props) {
   return (
     <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "4px",
-        padding: "4px 8px",
-        border: "1px solid #ccc",
-        borderBottom: active ? "2px solid blue" : "1px solid #ccc",
-        background: active ? "#e0f0ff" : "#fff",
-        cursor: "pointer",
-      }}
+      className={`${styles.tab} ${active ? styles.tabActive : ""}`}
       onClick={onClick}
     >
       {tab.icon && <span>{tab.icon}</span>}
-
       <span>{tab.title}</span>
 
       <span
-        style={{ marginLeft: "auto", cursor: "pointer" }}
+        className={styles.iconWrapper}
         onClick={(e) => {
           e.stopPropagation();
           onPin();
@@ -48,7 +39,7 @@ export default function SortableTab({
       </span>
 
       <span
-        style={{ cursor: "pointer" }}
+        className={styles.closeIcon}
         onClick={(e) => {
           e.stopPropagation();
           onClose();

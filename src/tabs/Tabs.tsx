@@ -7,7 +7,8 @@ import {
 } from "@dnd-kit/sortable";
 import { tabsArray } from "../tabsArray/tabsArray";
 import { type TTabs } from "../tabsArray/tabsArray";
-import SortableTab from "./SortableTab";
+import SortableTab from "./sortableTab/SortableTab";
+import styles from "./tabs.module.css";
 
 export default function Tabs() {
   const [tabs, setTabs] = useState<TTabs[]>(tabsArray);
@@ -22,7 +23,6 @@ export default function Tabs() {
   useEffect(() => {
     const updateTabs = () => {
       if (!containerRef.current) return;
-
       const containerWidth = containerRef.current.offsetWidth;
       let total = 0;
       const visible: TTabs[] = [];
@@ -90,17 +90,9 @@ export default function Tabs() {
   const pinnedTabs = tabs.filter((t) => t.pinned);
 
   return (
-    <div style={{ padding: "16px" }}>
+    <div className={styles.container}>
       <DndContext onDragEnd={handleDragEnd}>
-        <div
-          ref={containerRef}
-          style={{
-            display: "flex",
-            gap: "4px",
-            borderBottom: "1px solid #ccc",
-            position: "relative",
-          }}
-        >
+        <div ref={containerRef} className={styles.tabsWrapper}>
           <SortableContext
             items={visibleNormal.map((t) => t.id)}
             strategy={horizontalListSortingStrategy}
@@ -119,29 +111,15 @@ export default function Tabs() {
           </SortableContext>
 
           {overflowNormal.length > 0 && (
-            <div style={{ position: "relative" }}>
-              <button style={{ padding: "4px 8px" }}>More ▼</button>
-              <div
-                style={{
-                  position: "absolute",
-                  top: "100%",
-                  right: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  border: "1px solid #ccc",
-                  background: "#fff",
-                  minWidth: "120px",
-                  zIndex: 10,
-                }}
-              >
+            <div className={styles.overflowWrapper}>
+              <button className={styles.overflowButton}>More ▼</button>
+              <div className={styles.overflowMenu}>
                 {overflowNormal.map((tab) => (
                   <div
                     key={tab.id}
-                    style={{
-                      padding: "4px 8px",
-                      cursor: "pointer",
-                      backgroundColor: tab.id === activeId ? "#a2d2ff" : "#fff",
-                    }}
+                    className={`${styles.overflowItem} ${
+                      tab.id === activeId ? styles.overflowItemActive : ""
+                    }`}
                     onClick={() => handleClick(tab)}
                   >
                     {tab.title}
@@ -153,27 +131,15 @@ export default function Tabs() {
         </div>
 
         {pinnedTabs.length > 0 && (
-          <div style={{ position: "relative", marginTop: "8px" }}>
+          <div className={styles.pinnedWrapper}>
             <button
-              style={{ padding: "4px 8px", cursor: "pointer" }}
+              className={styles.pinnedButton}
               onClick={() => setShowPinned((prev) => !prev)}
             >
               Pinned ▼
             </button>
             {showPinned && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "100%",
-                  left: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  border: "1px solid #ccc",
-                  background: "#fff",
-                  minWidth: "120px",
-                  zIndex: 10,
-                }}
-              >
+              <div className={styles.pinnedMenu}>
                 {pinnedTabs.map((tab) => (
                   <SortableTab
                     key={tab.id}
